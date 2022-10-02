@@ -11,9 +11,9 @@ namespace AcademyProject.Controllers
     {
         private readonly IAuthorService _authorService;
 
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<PersonController> _logger;
 
-        public AuthorController(ILogger<UserController> logger, IAuthorService authorService)
+        public AuthorController(ILogger<PersonController> logger, IAuthorService authorService)
         {
             _logger = logger;
             _authorService = authorService;

@@ -2,29 +2,29 @@
 
 namespace AcademyProjectDL.Repositories.InMemoryRepo
 {
-    public class UserInMemoryRepository : IUserInMemoryRepository
+    public class PersonInMemoryRepository : IPersonInMemoryRepository
     {
-        private static List<User> _users = new List<User>()
+        private static List<Person> _users = new List<Person>()
         {
-            new User()
+            new Person()
             {
                 Id = 1,
                 Name = "Ivan",
                 Age = 29
             },
-            new User()
+            new Person()
             {
                 Id = 2,
                 Name = "Pesho",
                 Age = 29
             },
-            new User()
+            new Person()
             {
                 Id = 3,
                 Name = "Georgi",
                 Age = 29
             },
-            new User()
+            new Person()
             {
                 Id = 4,
                 Name = "Dimitar",
@@ -34,25 +34,25 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
 
         public Guid Id { get; set; }
 
-        public UserInMemoryRepository()
+        public PersonInMemoryRepository()
         {
             Id = Guid.NewGuid();
         }
 
-        public IEnumerable<User> GetAllUsers => _users;
+        public IEnumerable<Person> GetAllPersons => _users;
 
-        public User? GetById(int id)
+        public Person? GetById(int id)
         {
             return _users.FirstOrDefault(x => x.Id == id);
         }
 
-        public User? AddUser(User user)
+        public Person? AddPerson(Person user)
         {
             _users.Add(user);
             return user;
         }
 
-        public User? UpdateUser(User user)
+        public Person? UpdatePerson(Person user)
         {
             var existingUser = _users.FirstOrDefault(x => x.Id == user.Id);
             if (existingUser == null) return null;
@@ -63,7 +63,7 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
             return user;
         }
 
-        public User? DeleteUser(int userId)
+        public Person? DeletePerson(int userId)
         {
             var userToRemove = _users.FirstOrDefault(x => x.Id == userId);
             if(userToRemove == null) return null;

@@ -10,7 +10,6 @@ namespace AcademyProjectSL.Interfaces
     public interface IBookService
     {
         IEnumerable<Book> GetAllBooks { get; }
-
         Book? AddBook(Book book);
         Book? DeleteBook(int bookId);
         Book? GetById(int id);

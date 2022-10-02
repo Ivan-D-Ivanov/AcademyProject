@@ -10,7 +10,6 @@ namespace AcademyProjectSL.Interfaces
     public interface IAuthorService
     {
         IEnumerable<Author> GetAllUsers { get; }
-
         Author? AddAuthor(Author user);
         Author? DeleteAuthor(int userId);
         Author? GetById(int id);

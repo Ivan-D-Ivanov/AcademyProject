@@ -8,10 +8,10 @@ namespace AcademyProject.Controllers
     [Route("[controller]")]
     public class BookController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<PersonController> _logger;
         private readonly IBookService _bookService;
 
-        public BookController(ILogger<UserController> logger, IBookService bService)
+        public BookController(ILogger<PersonController> logger, IBookService bService)
         {
             _logger = logger;
             _bookService = bService;
