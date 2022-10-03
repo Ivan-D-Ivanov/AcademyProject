@@ -17,28 +17,32 @@ namespace AcademyProject.Controllers
             _personService = uService;
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(Get))]
-        public IEnumerable<Person> Get()
+        public IActionResult Get()
         {
-            return _personService.GetAllPersons;
+            return Ok(_personService.GetAllPersons);
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetById))]
-        public Person? GetById(int id)
+        public IActionResult GetById(int id)
         {
-            return _personService.GetById(id);
+            return Ok(_personService.GetById(id));
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost(nameof(Add))]
-        public Person? Add([FromBody] Person user)
+        public IActionResult Add([FromBody] Person user)
         {
-            return _personService.AddPerson(user);
+            return Ok(_personService.AddPerson(user));
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost(nameof(Update))]
-        public Person? Update(Person user)
+        public IActionResult Update(Person user)
         {
-            return _personService.UpdatePerson(user);
+            return Ok(_personService.UpdatePerson(user));
         }
     }
 }

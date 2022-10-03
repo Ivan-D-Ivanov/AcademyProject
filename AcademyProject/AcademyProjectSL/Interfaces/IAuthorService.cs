@@ -1,14 +1,16 @@
 ﻿using AcademyProjectModels;
+using AcademyProjectModels.Request;
+using AcademyProjectModels.Response;
 
 namespace AcademyProjectSL.Interfaces
 {
     public interface IAuthorService
     {
         IEnumerable<Author> GetAuthors { get; }
-        Author? AddAuthor(Author user);
+        AddAuthorResponse AddAuthor(AddAuthorRequest authorRequest);
         Author? DeleteAuthor(int userId);
         Author? GetById(int id);
-        Author? UpdateAuthor(Author user);
-        Guid GetId();
+        UpdateAuthoreResponse UpdateAuthor(UpdateAuthorRequest authorRequest);
+        Author? GetAuthorByName(string name);
     }
 }

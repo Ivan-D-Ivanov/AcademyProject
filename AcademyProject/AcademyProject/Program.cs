@@ -1,14 +1,20 @@
-using AcademyProjectDL.Repositories.InMemoryRepo;
-using AcademyProjectSL.Interfaces;
-using AcademyProjectSL.Services;
+using AcademyProject.Extensions;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+
+var logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddSerilog(logger);
+
 // Add services to the container.
-builder.Services.AddSingleton<IPersonInMemoryRepository, PersonInMemoryRepository>();
-builder.Services.AddSingleton<IAuthorInMemoryRepo, AuthorInMemoryRepo>();
-builder.Services.AddSingleton<IPersonService, PersonService>();
-builder.Services.AddSingleton<IAuthorService, AuthorService>();
+builder.Services.RegisterRepositoriesPerson()
+    .RegisterServicePerson()
+    .AddAutoMapper(typeof(Program));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

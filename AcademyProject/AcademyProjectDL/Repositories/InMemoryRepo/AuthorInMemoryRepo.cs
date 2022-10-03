@@ -40,14 +40,6 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
             },
         };
 
-
-        public Guid Id { get; set; }
-
-        public AuthorInMemoryRepo()
-        {
-            Id = Guid.NewGuid();
-        }
-
         public IEnumerable<Author> GetAuthors => _authors;
 
         public Author? GetById(int id)
@@ -81,9 +73,9 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
             return authorToRemove;
         }
 
-        public Guid GetId()
+        public Author? GetAuthorByName(string name)
         {
-            return Id;
+            return _authors.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
         }
     }
 }
