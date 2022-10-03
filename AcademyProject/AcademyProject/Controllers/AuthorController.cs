@@ -21,14 +21,6 @@ namespace AcademyProject.Controllers
         [HttpGet(nameof(GetAllAuthors))]
         public IActionResult GetAllAuthors()
         {
-            try
-            {
-                throw new NullReferenceException();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-            }
             return Ok(_authorService.GetAuthors);
         }
 
