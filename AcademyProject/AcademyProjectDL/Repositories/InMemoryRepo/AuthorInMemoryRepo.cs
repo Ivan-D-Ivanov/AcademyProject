@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using AcademyProjectModels;
+﻿using AcademyProjectModels;
 
 namespace AcademyProjectDL.Repositories.InMemoryRepo
 {
@@ -54,7 +48,7 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
             Id = Guid.NewGuid();
         }
 
-        public IEnumerable<Author> GetAllUsers => _authors;
+        public IEnumerable<Author> GetAuthors => _authors;
 
         public Author? GetById(int id)
         {

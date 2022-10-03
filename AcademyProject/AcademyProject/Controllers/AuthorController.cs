@@ -1,7 +1,6 @@
 ﻿using AcademyProjectSL.Interfaces;
 using AcademyProjectModels;
 using Microsoft.AspNetCore.Mvc;
-using AcademyProjectSL.Services;
 
 namespace AcademyProject.Controllers
 {
@@ -28,7 +27,7 @@ namespace AcademyProject.Controllers
         [HttpGet(nameof(Get))]
         public IEnumerable<Author> Get()
         {
-            return _authorService.GetAllUsers;
+            return _authorService.GetAuthors;
         }
 
         [HttpGet(nameof(GetById))]

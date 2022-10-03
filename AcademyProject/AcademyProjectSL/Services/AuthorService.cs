@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AcademyProjectDL.Repositories.InMemoryRepo;
+﻿using AcademyProjectDL.Repositories.InMemoryRepo;
 using AcademyProjectModels;
 using AcademyProjectSL.Interfaces;
 
@@ -18,7 +13,7 @@ namespace AcademyProjectSL.Services
             _authorInMemoryRepo = authorInMemoryRepo;
         }
 
-        public IEnumerable<Author> GetAllUsers => _authorInMemoryRepo.GetAllUsers;
+        public IEnumerable<Author> GetAuthors => _authorInMemoryRepo.GetAuthors;
 
         public Author? GetById(int id)
         {

@@ -1,6 +1,4 @@
-﻿
-
-using AcademyProjectDL.Repositories.InMemoryRepo;
+﻿using AcademyProjectDL.Repositories.InMemoryRepo;
 using AcademyProjectModels;
 using AcademyProjectSL.Interfaces;
 

@@ -5,11 +5,11 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyProject", "AcademyProject\AcademyProject.csproj", "{B753505C-6F54-47D8-9488-2106DF1ABF9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyProjectModels", "AcademyProjectModels\AcademyProjectModels.csproj", "{3492DD93-0366-451D-B705-294AA3ADA9DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyProjectModels", "AcademyProjectModels\AcademyProjectModels.csproj", "{3492DD93-0366-451D-B705-294AA3ADA9DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyProjectDL", "AcademyProjectDL\AcademyProjectDL.csproj", "{4CF9C2A2-CD58-449B-9967-1E35318094C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyProjectDL", "AcademyProjectDL\AcademyProjectDL.csproj", "{4CF9C2A2-CD58-449B-9967-1E35318094C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyProjectSL", "AcademyProjectSL\AcademyProjectSL.csproj", "{AD2C0999-C271-426A-83F8-B8FB0CE4EE28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcademyProjectSL", "AcademyProjectSL\AcademyProjectSL.csproj", "{AD2C0999-C271-426A-83F8-B8FB0CE4EE28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
