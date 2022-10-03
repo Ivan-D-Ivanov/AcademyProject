@@ -8,9 +8,8 @@ namespace AcademyProject.Controllers
     [Route("[controller]")]
     public class AuthorController : ControllerBase
     {
-        private readonly IAuthorService _authorService;
-
         private readonly ILogger<PersonController> _logger;
+        private readonly IAuthorService _authorService;
 
         public AuthorController(ILogger<PersonController> logger, IAuthorService authorService)
         {
