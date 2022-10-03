@@ -1,5 +1,5 @@
-﻿using AcademyProjectSL.Interfaces;
-using AcademyProjectModels;
+﻿using AcademyProjectModels.Request;
+using AcademyProjectSL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademyProject.Controllers
@@ -8,38 +8,53 @@ namespace AcademyProject.Controllers
     [Route("[controller]")]
     public class AuthorController : ControllerBase
     {
-        private readonly ILogger<PersonController> _logger;
+        private readonly ILogger<AuthorController> _logger;
         private readonly IAuthorService _authorService;
 
-        public AuthorController(ILogger<PersonController> logger, IAuthorService authorService)
+        public AuthorController(ILogger<AuthorController> logger, IAuthorService authorService)
         {
             _logger = logger;
             _authorService = authorService;
         }
 
-        [HttpGet(nameof(GetGuid))]
-        public Guid GetGuid()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet(nameof(GetAllAuthors))]
+        public IActionResult GetAllAuthors()
         {
-            return _authorService.GetId();
+            return Ok(_authorService.GetAuthors);
         }
 
-        [HttpGet(nameof(Get))]
-        public IEnumerable<Author> Get()
-        {
-            return _authorService.GetAuthors;
-        }
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetById))]
-        public Author GetById(int id)
+        public IActionResult GetById(int id)
         {
             var result = _authorService.GetById(id);
-            return result;
+            return Ok(result);
         }
 
-        [HttpPost(nameof(Add))]
-        public Author? Add([FromBody] Author author)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPost(nameof(AddAuthor))]
+        public IActionResult AddAuthor([FromBody] AddAuthorRequest authorRequest)
         {
-            return _authorService.AddAuthor(author);
+            var result = _authorService.AddAuthor(authorRequest);
+            return Ok(result);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpPost(nameof(UpdateAuthor))]
+        public IActionResult UpdateAuthor(UpdateAuthorRequest updateAuthorRequest)
+        {
+            var result = _authorService.UpdateAuthor(updateAuthorRequest);
+            return Ok(result);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet(nameof(GetAuthorByName))]
+        public IActionResult GetAuthorByName(string name)
+        {
+            return Ok(_authorService.GetAuthorByName(name));
         }
     }
 }

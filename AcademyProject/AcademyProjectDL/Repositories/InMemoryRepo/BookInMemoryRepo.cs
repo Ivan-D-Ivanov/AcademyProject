@@ -32,13 +32,6 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
             },
         };
 
-        public Guid Id { get; set; }
-
-        public BookInMemoryRepo()
-        {
-            Id = Guid.NewGuid();
-        }
-
         public IEnumerable<Book> GetAllBooks => _books;
 
         public Book? AddBook(Book book)
@@ -59,11 +52,6 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
         public Book? GetById(int id)
         {
             return _books.FirstOrDefault(x => x.Id == id);
-        }
-
-        public Guid GetId()
-        {
-            return Id;
         }
 
         public Book? UpdateBook(Book book)

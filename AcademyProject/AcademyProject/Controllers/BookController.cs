@@ -1,4 +1,4 @@
-﻿using AcademyProjectModels;
+﻿using AcademyProjectModels.Request;
 using AcademyProjectSL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,37 +8,45 @@ namespace AcademyProject.Controllers
     [Route("[controller]")]
     public class BookController : ControllerBase
     {
-        private readonly ILogger<PersonController> _logger;
+        private readonly ILogger<BookController> _logger;
         private readonly IBookService _bookService;
 
-        public BookController(ILogger<PersonController> logger, IBookService bService)
+        public BookController(ILogger<BookController> logger, IBookService bService)
         {
             _logger = logger;
             _bookService = bService;
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(Get))]
-        public IEnumerable<Book> Get()
+        public IActionResult Get()
         {
-            return _bookService.GetAllBooks;
+            return Ok(_bookService.GetAllBooks);
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetById))]
-        public Book? GetById(int id)
+        public IActionResult GetById(int id)
         {
-            return _bookService.GetById(id);
+            return Ok(_bookService.GetById(id));
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost(nameof(Add))]
-        public Book? Add([FromBody] Book book)
+        public IActionResult Add([FromBody] AddBookRequest addBookRequest)
         {
-            return _bookService.AddBook(book);
+            var result = _bookService.AddBook(addBookRequest);
+            return Ok(result);
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost(nameof(Update))]
-        public Book? Update(Book book)
+        public IActionResult Update(UpdateBookRequest updateBookRequest)
         {
-            return _bookService.UpdateBook(book);
+            var result = _bookService.UpdateBook(updateBookRequest);
+            return Ok(result);
         }
     }
 }
