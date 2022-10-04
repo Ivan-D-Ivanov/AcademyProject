@@ -6,10 +6,11 @@ namespace AcademyProjectSL.Interfaces
 {
     public interface IBookService
     {
-        IEnumerable<Book> GetAllBooks { get; }
-        AddBookResponse AddBook(AddBookRequest bookRequest);
-        Book? DeleteBook(int bookId);
-        Book? GetById(int id);
-        UpdateBookResponse UpdateBook(UpdateBookRequest bookRequest);
+        Task<IEnumerable<Book>> GetAllBooks();
+        Task<AddBookResponse> AddBook(AddBookRequest bookRequest);
+        Task<Book?> DeleteBook(int bookId);
+        Task<Book?> GetById(int id);
+        Task<Book?> GetBookByAuthorId(int id);
+        Task<UpdateBookResponse> UpdateBook(UpdateBookRequest bookRequest);
     }
 }

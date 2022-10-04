@@ -19,42 +19,47 @@ namespace AcademyProject.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetAllAuthors))]
-        public IActionResult GetAllAuthors()
+        public async Task<IActionResult> GetAllAuthors()
         {
-            return Ok(_authorService.GetAuthors);
+            return Ok(await _authorService.GetAuthors());
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetById))]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = _authorService.GetById(id);
-            return Ok(result);
+            return Ok(await _authorService.GetById(id));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost(nameof(AddAuthor))]
-        public IActionResult AddAuthor([FromBody] AddAuthorRequest authorRequest)
+        public async Task<IActionResult> AddAuthor([FromBody] AddAuthorRequest authorRequest)
         {
-            var result = _authorService.AddAuthor(authorRequest);
-            return Ok(result);
+            return Ok(await _authorService.AddAuthor(authorRequest));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost(nameof(UpdateAuthor))]
-        public IActionResult UpdateAuthor(UpdateAuthorRequest updateAuthorRequest)
+        [HttpPut(nameof(UpdateAuthor))]
+        public async Task<IActionResult> UpdateAuthor(UpdateAuthorRequest updateAuthorRequest)
         {
-            var result = _authorService.UpdateAuthor(updateAuthorRequest);
-            return Ok(result);
+            return Ok(await _authorService.UpdateAuthor(updateAuthorRequest));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetAuthorByName))]
-        public IActionResult GetAuthorByName(string name)
+        public async Task<IActionResult> GetAuthorByName(string name)
         {
-            return Ok(_authorService.GetAuthorByName(name));
+            return Ok(await _authorService.GetAuthorByName(name));
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpDelete(nameof(DeleteAuthorById))]
+        public async Task<IActionResult> DeleteAuthorById(int authorId)
+        {
+            return Ok(await _authorService.DeleteAuthor(authorId));
         }
     }
 }

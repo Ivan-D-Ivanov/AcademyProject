@@ -6,11 +6,11 @@ namespace AcademyProjectSL.Interfaces
 {
     public interface IAuthorService
     {
-        IEnumerable<Author> GetAuthors { get; }
-        AddAuthorResponse AddAuthor(AddAuthorRequest authorRequest);
-        Author? DeleteAuthor(int userId);
-        Author? GetById(int id);
-        UpdateAuthoreResponse UpdateAuthor(UpdateAuthorRequest authorRequest);
-        Author? GetAuthorByName(string name);
+        Task<IEnumerable<Author>> GetAuthors();
+        Task<AddAuthorResponse> AddAuthor(AddAuthorRequest authorRequest);
+        Task<Author?> DeleteAuthor(int userId);
+        Task<Author?> GetById(int id);
+        Task<UpdateAuthoreResponse> UpdateAuthor(UpdateAuthorRequest authorRequest);
+        Task<Author?> GetAuthorByName(string name);
     }
 }

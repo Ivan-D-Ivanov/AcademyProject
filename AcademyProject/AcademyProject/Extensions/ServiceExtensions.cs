@@ -1,4 +1,5 @@
 ﻿using AcademyProjectDL.Repositories.InMemoryRepo;
+using AcademyProjectDL.Repositories.MsSQL;
 using AcademyProjectSL.Interfaces;
 using AcademyProjectSL.Services;
 
@@ -9,8 +10,8 @@ namespace AcademyProject.Extensions
         public static IServiceCollection RegisterRepositoriesPerson(this IServiceCollection services)
         {
             services.AddSingleton<IPersonInMemoryRepository, PersonInMemoryRepository>();
-            services.AddSingleton<IAuthorInMemoryRepo, AuthorInMemoryRepo>();
-            services.AddSingleton<IBookInMemoryRepo, BookInMemoryRepo>();
+            services.AddSingleton<IAuthorInMemoryRepo, AuthorRepository>();
+            services.AddSingleton<IBookInMemoryRepo, BookRepository>();
             return services;
         }
 

@@ -4,10 +4,11 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
 {
     public interface IBookInMemoryRepo
     {
-        IEnumerable<Book> GetAllBooks { get; }
-        Book? AddBook(Book book);
-        Book? DeleteBook(int bookId);
-        Book? GetById(int id);
-        Book? UpdateBook(Book book);
+        Task<IEnumerable<Book>> GetAllBooks();
+        Task<Book?> AddBook(Book book);
+        Task<Book?> DeleteBook(int bookId);
+        Task<Book?> GetById(int id);
+        Task<Book?> UpdateBook(Book book);
+        Task<Book?> GetBookByAuthorId(int id);
     }
 }

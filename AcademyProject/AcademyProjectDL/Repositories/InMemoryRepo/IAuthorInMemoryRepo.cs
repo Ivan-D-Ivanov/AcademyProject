@@ -4,11 +4,11 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
 {
     public interface IAuthorInMemoryRepo
     {
-        IEnumerable<Author> GetAuthors { get; }
-        Author? AddAuthor(Author user);
-        Author? DeleteAuthor(int userId);
-        Author? GetById(int id);
-        Author? UpdateAuthor(Author user);
-        Author? GetAuthorByName(string name);
+        Task<IEnumerable<Author>> GetAuthors();
+        Task<Author?> AddAuthor(Author user);
+        Task<Author?> DeleteAuthor(int userId);
+        Task<Author?> GetById(int id);
+        Task<Author?> UpdateAuthor(Author user);
+        Task<Author?> GetAuthorByName(string name);
     }
 }

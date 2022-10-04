@@ -18,40 +18,47 @@ namespace AcademyProjectSL.Services
             _bookInMemoryRepo = bookInMemoryRepo;
         }
 
-        public IEnumerable<Book> GetAllBooks => _bookInMemoryRepo.GetAllBooks;
+        public async Task<IEnumerable<Book>> GetAllBooks() => await _bookInMemoryRepo.GetAllBooks();
 
-        public AddBookResponse AddBook(AddBookRequest bookRequest)
+        public async Task<Book?> GetById(int id)
+        {
+            if(id <= 0) return null;
+            return await _bookInMemoryRepo.GetById(id);
+        }
+
+        public async Task<Book?> GetBookByAuthorId(int id)
+        {
+            if (id <= 0) return null;
+            return await _bookInMemoryRepo.GetBookByAuthorId(id);
+        }
+
+        public async Task<AddBookResponse> AddBook(AddBookRequest bookRequest)
         {
             if (bookRequest == null) return new AddBookResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "The request is null" };
 
-            var result = _bookInMemoryRepo.GetAllBooks.FirstOrDefault(b => b.Id == bookRequest.Id);
+            var result = await _bookInMemoryRepo.GetById(bookRequest.Id);
 
             if (result != null) return new AddBookResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "This Book already exists" };
 
             var resultFromMap = _mapper.Map<Book>(bookRequest);
-            _bookInMemoryRepo.AddBook(resultFromMap);
+            await _bookInMemoryRepo.AddBook(resultFromMap);
             return new AddBookResponse() { HttpStatusCode = System.Net.HttpStatusCode.OK, Book = resultFromMap };
         }
 
-        public Book? DeleteBook(int bookId)
+        public async Task<Book?> DeleteBook(int bookId)
         {
-            return _bookInMemoryRepo.DeleteBook(bookId);
+            return await _bookInMemoryRepo.DeleteBook(bookId);
         }
 
-        public Book? GetById(int id)
-        {
-            return _bookInMemoryRepo.GetById(id);
-        }
-
-        public UpdateBookResponse UpdateBook(UpdateBookRequest bookRequest)
+        public async Task<UpdateBookResponse> UpdateBook(UpdateBookRequest bookRequest)
         {
             if (bookRequest == null) return new UpdateBookResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "The request is null" };
 
-            var result = _bookInMemoryRepo.GetAllBooks.FirstOrDefault(b => b.Id == bookRequest.Id);
+            var result = await _bookInMemoryRepo.GetById(bookRequest.Id);
             if (result == null) return new UpdateBookResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "There is no such Book" };
 
             var resultFromMap = _mapper.Map<Book>(bookRequest);
-            _bookInMemoryRepo.UpdateBook(resultFromMap);
+            await _bookInMemoryRepo.UpdateBook(resultFromMap);
             return new UpdateBookResponse() { HttpStatusCode = System.Net.HttpStatusCode.OK, Book = resultFromMap };
         }
     }
