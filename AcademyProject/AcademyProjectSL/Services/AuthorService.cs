@@ -11,13 +11,13 @@ namespace AcademyProjectSL.Services
     {
         private readonly IMapper _mapper;
         private readonly IAuthorInMemoryRepo _authorInMemoryRepo;
-        private readonly IBookService _bookService;
+        private readonly IBookInMemoryRepo _bookInMemoryRepo;
 
-        public AuthorService(IAuthorInMemoryRepo authorInMemoryRepo, IMapper mapper, IBookService bookService)
+        public AuthorService(IAuthorInMemoryRepo authorInMemoryRepo, IMapper mapper, IBookInMemoryRepo bookInMemoryRepo)
         {
             _mapper = mapper;
             _authorInMemoryRepo = authorInMemoryRepo;
-            _bookService = bookService;
+            _bookInMemoryRepo = bookInMemoryRepo;
         }
 
         public async Task<IEnumerable<Author>> GetAuthors() => await _authorInMemoryRepo.GetAuthors();
@@ -59,7 +59,7 @@ namespace AcademyProjectSL.Services
             if (authorId <= 0) return null;
             var author = await GetById(authorId);
             if (author == null) return null;
-            if (await _bookService.GetBookByAuthorId(author.Id) != null) return null;
+            if (await _bookInMemoryRepo.GetBookByAuthorId(author.Id) != null) return null;
             return await _authorInMemoryRepo.DeleteAuthor(authorId);
         }
 

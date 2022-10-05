@@ -10,7 +10,7 @@
 
         public int Quantity { get; set; }
 
-        public DateTime dateTime { get; set; }
+        public DateTime LastUpdated { get; set; }
 
         public decimal Price { get; set; }
     }

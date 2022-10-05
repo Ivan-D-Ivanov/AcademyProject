@@ -32,6 +32,13 @@ namespace AcademyProject.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet(nameof(GetBookByTitle))]
+        public async Task<IActionResult> GetBookByTitle(string title)
+        {
+            return Ok(await _bookService.GetBookByTitle(title));
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost(nameof(AddBook))]
         public async Task<IActionResult> AddBook([FromBody] AddBookRequest addBookRequest)
@@ -47,6 +54,14 @@ namespace AcademyProject.Controllers
         {
             var result = await _bookService.UpdateBook(updateBookRequest);
             return Ok(result);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpDelete(nameof(DeleteBook))]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            return Ok(await _bookService.DeleteBook(id));
         }
     }
 }

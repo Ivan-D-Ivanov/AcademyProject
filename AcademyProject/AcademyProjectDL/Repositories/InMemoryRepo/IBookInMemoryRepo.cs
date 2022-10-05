@@ -10,5 +10,6 @@ namespace AcademyProjectDL.Repositories.InMemoryRepo
         Task<Book?> GetById(int id);
         Task<Book?> UpdateBook(Book book);
         Task<Book?> GetBookByAuthorId(int id);
+        Task<Book?> GetBookByTitle(string title);
     }
 }

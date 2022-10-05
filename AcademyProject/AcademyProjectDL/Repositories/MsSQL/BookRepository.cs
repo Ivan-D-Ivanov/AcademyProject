@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Dapper;
+using System.Xml.Linq;
 
 namespace AcademyProjectDL.Repositories.MsSQL
 {
@@ -18,14 +19,44 @@ namespace AcademyProjectDL.Repositories.MsSQL
             _configuration = configuration;
         }
 
-        public Task<Book> AddBook(Book book)
+        public async Task<Book> AddBook(Book book)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    await connection.OpenAsync();
+
+                    return (await connection
+                        .QueryAsync<Book>
+                        ($"INSERT INTO Books (AuthorId,Title,LastUpdated,Quantity,Price) VALUES(@AuthorId,@Title,@LastUpdated,@Quantity,@Price)", book))
+                        .SingleOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error from {nameof(GetById)} : {e}");
+            }
+
+            return null;
         }
 
-        public Task<Book> DeleteBook(int bookId)
+        public async Task<Book> DeleteBook(int bookId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    await connection.OpenAsync();
+                    return (await connection.QueryAsync<Book>($"DELETE FROM Books WHERE Id = @Id", new { Id = bookId })).SingleOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error from {nameof(GetById)} : {e}");
+            }
+
+            return null;
         }
 
         public async Task<IEnumerable<Book>> GetAllBooks()
@@ -49,14 +80,66 @@ namespace AcademyProjectDL.Repositories.MsSQL
             return Enumerable.Empty<Book>();
         }
 
-        public Task<Book> GetById(int id)
+        public async Task<Book> GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    await connection.OpenAsync();
+
+                    var author = await connection.QueryFirstOrDefaultAsync<Book>($"SELECT * FROM Books WITH(NOLOCK) WHERE Books.Id = @Id", new { Id = id });
+                    return author;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in {nameof(GetById)} : {e}");
+            }
+
+            return null;
         }
 
-        public Task<Book> UpdateBook(Book book)
+        public async Task<Book> GetBookByTitle(string title)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    await connection.OpenAsync();
+
+                    var book = await connection.QueryFirstOrDefaultAsync<Book>($"SELECT * FROM Books WITH(NOLOCK) WHERE Books.Title LIKE @Title", new { Title = title });
+                    return book;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error from {nameof(GetById)} : {e}");
+            }
+
+            return null;
+        }
+
+        public async Task<Book> UpdateBook(Book book)
+        {
+            try
+            {
+                await using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    await connection.OpenAsync();
+
+                    return (await connection
+                        .QueryAsync<Book>
+                        ($"UPDATE Books SET AuthorId=@AuthorId,Title=@Title,LastUpdated=@LastUpdated,Quantity=@Quantity,Price=@Price WHERE Id = @Id", book))
+                        .SingleOrDefault();
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error from {nameof(GetById)} : {e}");
+            }
+
+            return null;
         }
 
         public async Task<Book> GetBookByAuthorId(int authorId)
