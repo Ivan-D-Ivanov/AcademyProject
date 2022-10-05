@@ -2,7 +2,7 @@
 
 namespace AcademyProjectDL.Repositories.InMemoryRepo
 {
-    public class BookInMemoryRepo : IBookInMemoryRepo
+    public class BookInMemoryRepo
     {
         private static List<Book> _books = new List<Book>()
         {

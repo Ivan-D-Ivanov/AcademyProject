@@ -10,6 +10,8 @@ namespace AcademyProject.AutoMapping
         {
             CreateMap<AddAuthorRequest, Author>();
             CreateMap<UpdateAuthorRequest, Author>();
+            CreateMap<AddBookRequest, Book>();
+            CreateMap<UpdateBookRequest, Book>();
         }
     }
 }
