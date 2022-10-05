@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Dapper;
-using System.Xml.Linq;
 
 namespace AcademyProjectDL.Repositories.MsSQL
 {
