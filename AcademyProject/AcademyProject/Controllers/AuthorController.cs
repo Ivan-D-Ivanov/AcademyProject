@@ -1,4 +1,5 @@
-﻿using AcademyProjectModels.Request;
+﻿using System.Net;
+using AcademyProjectModels.Request;
 using AcademyProjectSL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,10 @@ namespace AcademyProject.Controllers
         [HttpGet(nameof(GetById))]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _authorService.GetById(id));
+            var result = await _authorService.GetById(id);
+            if (result == null) return NotFound(id);
+            
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -36,7 +40,9 @@ namespace AcademyProject.Controllers
         [HttpPost(nameof(AddAuthor))]
         public async Task<IActionResult> AddAuthor([FromBody] AddAuthorRequest authorRequest)
         {
-            return Ok(await _authorService.AddAuthor(authorRequest));
+            var result = await _authorService.AddAuthor(authorRequest);
+            if (result.HttpStatusCode == HttpStatusCode.BadRequest) return BadRequest(result);
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -51,7 +57,10 @@ namespace AcademyProject.Controllers
         [HttpGet(nameof(GetAuthorByName))]
         public async Task<IActionResult> GetAuthorByName(string name)
         {
-            return Ok(await _authorService.GetAuthorByName(name));
+            var result = await _authorService.GetAuthorByName(name);
+            if(result == null) return BadRequest(name);
+
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -59,7 +68,9 @@ namespace AcademyProject.Controllers
         [HttpDelete(nameof(DeleteAuthorById))]
         public async Task<IActionResult> DeleteAuthorById(int authorId)
         {
-            return Ok(await _authorService.DeleteAuthor(authorId));
+            var result = await _authorService.DeleteAuthor(authorId);
+            if (result == null) return NotFound(authorId);
+            return Ok(result);
         }
     }
 }

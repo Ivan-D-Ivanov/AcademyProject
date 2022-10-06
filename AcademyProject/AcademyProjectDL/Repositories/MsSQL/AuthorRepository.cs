@@ -134,7 +134,7 @@ namespace AcademyProjectDL.Repositories.MsSQL
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error from {nameof(GetById)} : {e}");
+                _logger.LogError($"Error from {nameof(UpdateAuthor)} : {e}");
             }
 
             return null;
