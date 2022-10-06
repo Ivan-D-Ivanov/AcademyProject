@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using AcademyProjectModels.MediatR.Commands;
 using AcademyProjectModels.Request;
 using AcademyProjectSL.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademyProject.Controllers
@@ -10,26 +12,26 @@ namespace AcademyProject.Controllers
     public class AuthorController : ControllerBase
     {
         private readonly ILogger<AuthorController> _logger;
-        private readonly IAuthorService _authorService;
+        private readonly IMediator _mediator;
 
-        public AuthorController(ILogger<AuthorController> logger, IAuthorService authorService)
+        public AuthorController(ILogger<AuthorController> logger, IMediator mediator)
         {
             _logger = logger;
-            _authorService = authorService;
+            _mediator = mediator;
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetAllAuthors))]
         public async Task<IActionResult> GetAllAuthors()
         {
-            return Ok(await _authorService.GetAuthors());
+            return Ok(await _mediator.Send(new GetAllAuthorsCommand()));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetById))]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _authorService.GetById(id);
+            var result = await _mediator.Send(new GetAuthorByIdCommand(id));
             if (result == null) return NotFound(id);
             
             return Ok(result);
@@ -40,7 +42,7 @@ namespace AcademyProject.Controllers
         [HttpPost(nameof(AddAuthor))]
         public async Task<IActionResult> AddAuthor([FromBody] AddAuthorRequest authorRequest)
         {
-            var result = await _authorService.AddAuthor(authorRequest);
+            var result = await _mediator.Send(new AddAuthorCommand(authorRequest));
             if (result.HttpStatusCode == HttpStatusCode.BadRequest) return BadRequest(result);
             return Ok(result);
         }
@@ -50,14 +52,14 @@ namespace AcademyProject.Controllers
         [HttpPut(nameof(UpdateAuthor))]
         public async Task<IActionResult> UpdateAuthor(UpdateAuthorRequest updateAuthorRequest)
         {
-            return Ok(await _authorService.UpdateAuthor(updateAuthorRequest));
+            return Ok(await _mediator.Send(new UpdateAuthorCommand(updateAuthorRequest)));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetAuthorByName))]
         public async Task<IActionResult> GetAuthorByName(string name)
         {
-            var result = await _authorService.GetAuthorByName(name);
+            var result = await _mediator.Send(new GetAuthorByNameCommand(name));
             if(result == null) return BadRequest(name);
 
             return Ok(result);
@@ -68,7 +70,7 @@ namespace AcademyProject.Controllers
         [HttpDelete(nameof(DeleteAuthorById))]
         public async Task<IActionResult> DeleteAuthorById(int authorId)
         {
-            var result = await _authorService.DeleteAuthor(authorId);
+            var result = await _mediator.Send(new DeleteAuthorCommand(authorId));
             if (result == null) return NotFound(authorId);
             return Ok(result);
         }
