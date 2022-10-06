@@ -69,7 +69,7 @@ namespace AcademyProject.Controllers
         public async Task<IActionResult> DeleteAuthorById(int authorId)
         {
             var result = await _authorService.DeleteAuthor(authorId);
-            if (result == null) return BadRequest(authorId);
+            if (result == null) return NotFound(authorId);
             return Ok(result);
         }
     }

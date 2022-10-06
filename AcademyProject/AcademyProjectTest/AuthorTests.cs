@@ -190,6 +190,28 @@ namespace AcademyProjectTest
         }
 
         [Fact]
+        public async Task DeleteNotFound()
+        {
+            var authorId = 5;
+            var expectedResult = _authors.FirstOrDefault(x => x.Id == authorId);
+            _authorMockedRepo.Setup(x => x.GetById(authorId)).ReturnsAsync(expectedResult);
+
+            //inject
+            var service = new AuthorService(_authorMockedRepo.Object, _mapper, _bookInMemoryRepoMockedRepo.Object);
+            var controller = new AuthorController(_authorControllerMockLogger.Object, service);
+
+            //act
+            var currResult = await controller.DeleteAuthorById(authorId);
+
+            //assert
+            var notFoundResult = currResult as NotFoundObjectResult;
+            Assert.NotNull(notFoundResult);
+
+            var authorIdNotFound = (int)notFoundResult.Value;
+            Assert.Equal(authorId, authorIdNotFound);
+        }
+
+        [Fact]
         public async Task Author_UpdateAuthorOk()
         {
             var authorReq = new UpdateAuthorRequest() { Name = "Dishsoup", Age = 20, DateOfBirth = DateTime.UtcNow, NickName = "Fool" };
