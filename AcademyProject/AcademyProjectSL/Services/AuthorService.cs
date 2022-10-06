@@ -34,7 +34,7 @@ namespace AcademyProjectSL.Services
 
             var result = await _authorInMemoryRepo.GetAuthorByName(authorRequest.Name);
 
-            if (result != null) return new AddAuthorResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "The Author already exists" };
+            if (result != null) return new AddAuthorResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "The Author already exists", Author = result };
 
             var author = _mapper.Map<Author>(authorRequest);
             var result2 = await _authorInMemoryRepo.AddAuthor(author);
@@ -45,9 +45,9 @@ namespace AcademyProjectSL.Services
         {
             if (authorRequest == null) return new UpdateAuthoreResponse { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = "Request is null" };
 
-            var result = await _authorInMemoryRepo.GetById(authorRequest.Id);
+            var result = await _authorInMemoryRepo.GetAuthorByName(authorRequest.Name);
 
-            if (result == null) return new UpdateAuthoreResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = $"Cant find this Author: {authorRequest.Name}" };
+            if (result == null) return new UpdateAuthoreResponse() { HttpStatusCode = System.Net.HttpStatusCode.BadRequest, Message = $"Cant find this Author: {authorRequest.Name}"};
 
             var result2 = _mapper.Map<Author>(authorRequest);
             await _authorInMemoryRepo.UpdateAuthor(result2);
