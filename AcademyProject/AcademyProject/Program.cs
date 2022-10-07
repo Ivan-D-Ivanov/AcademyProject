@@ -4,6 +4,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Serilog.Sinks.SystemConsole.Themes;
 using Serilog;
+using MediatR;
+using AcademyProject.CommandHandlers;
 
 var logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -28,10 +30,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Health checks
 builder.Services.AddHealthChecks()
     .AddCheck<SqlHealthCheck>("Sql Server")
     .AddUrlGroup(new Uri("https://google.bg"), name: "Google Connection");
 
+builder.Services.AddMediatR(typeof(GetAllBooksCommandHandler).Assembly);
+
+//app builder below
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
