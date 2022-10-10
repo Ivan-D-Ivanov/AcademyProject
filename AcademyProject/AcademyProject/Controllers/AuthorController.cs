@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using AcademyProjectModels.MediatR.Commands;
 using AcademyProjectModels.Request;
-using AcademyProjectSL.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

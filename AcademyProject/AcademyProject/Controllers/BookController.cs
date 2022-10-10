@@ -1,7 +1,7 @@
 ﻿using AcademyProjectModels.MediatR.Commands;
 using AcademyProjectModels.Request;
-using AcademyProjectSL.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademyProject.Controllers
@@ -19,6 +19,7 @@ namespace AcademyProject.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetAllBooks))]
         public async Task<IActionResult> GetAllBooks()
@@ -27,6 +28,7 @@ namespace AcademyProject.Controllers
             //return Ok(await _bookService.GetAllBooks());
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet(nameof(GetBookById))]
         public async Task<IActionResult> GetBookById(int id)
