@@ -9,10 +9,10 @@ namespace AcademyProjectDL.Repositories.MsSQL
 {
     public class BookRepository : IBookInMemoryRepo
     {
-        private readonly ILogger<AuthorRepository> _logger;
+        private readonly ILogger<BookRepository> _logger;
         private readonly IConfiguration _configuration;
 
-        public BookRepository(ILogger<AuthorRepository> logger, IConfiguration configuration)
+        public BookRepository(ILogger<BookRepository> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
