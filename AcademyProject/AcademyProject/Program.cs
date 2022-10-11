@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AcademyProjectModels.Users;
 using AcademyProjectDL.Repositories.MsSQL;
+using AcademyProjectSL.BackgroundServ;
 
 var logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -92,6 +93,9 @@ builder.Services.AddMediatR(typeof(GetAllBooksCommandHandler).Assembly);
 builder.Services.AddIdentity<UserInfo, UserRole>()
     .AddUserStore<UserInfoStore>()
     .AddRoleStore<UserRoleStore>();
+
+builder.Services.AddHostedService<MyBackgroundService>();
+
 //app builder below
 var app = builder.Build();
 
