@@ -14,6 +14,7 @@ using System.Text;
 using AcademyProjectModels.Users;
 using AcademyProjectDL.Repositories.MsSQL;
 using AcademyProjectSL.BackgroundServ;
+using AcademyProjectModels.CongigurationSettings;
 
 var logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -23,6 +24,12 @@ var logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddSerilog(logger);
+builder.Services.Configure<MyJsonSettings>(
+    builder.Configuration.GetSection(nameof(MyJsonSettings)));
+builder.Services.Configure<KafkaPublisherSettings>(
+    builder.Configuration.GetSection(nameof(KafkaPublisherSettings)));
+builder.Services.Configure<KafkaSubscriberSettings>(
+    builder.Configuration.GetSection(nameof(KafkaSubscriberSettings)));
 
 // Add services to the container.
 builder.Services.RegisterRepositoriesPerson()
