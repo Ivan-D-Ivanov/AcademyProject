@@ -1,4 +1,5 @@
-﻿using AcademyProjectDL.Repositories.InMemoryRepo;
+﻿using AcademyProjectCaches.CacheInMemoryCollection;
+using AcademyProjectDL.Repositories.InMemoryRepo;
 using AcademyProjectDL.Repositories.MsSQL;
 using AcademyProjectModels;
 using AcademyProjectSL.Interfaces;
@@ -15,6 +16,7 @@ namespace AcademyProject.Extensions
             services.AddSingleton<IBookInMemoryRepo, BookRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+            services.AddSingleton<GenericCollection<Book>>();
             return services;
         }
 
@@ -24,7 +26,7 @@ namespace AcademyProject.Extensions
             services.AddTransient<IUserInfoService, UserInfoService>();
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddTransient<IIdentityService, IdentityService>();
-            services.AddSingleton<IKafkaPublisherService<int, Person>, KafkaPublisherService<int, Person>>();
+            services.AddSingleton<IKafkaPublisherService<int, Book>, KafkaPublisherService<int, Book>>();
             return services;
         }
     }

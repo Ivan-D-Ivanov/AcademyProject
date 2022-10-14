@@ -7,5 +7,7 @@
         public int AutoOffsetReset { get; set; }
 
         public string GroupId { get; set; }
+
+        public string TopicName { get; set; }
     }
 }

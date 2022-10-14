@@ -5,15 +5,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AcademyProjectModels.KafkaModels;
-using System.Threading;
 
 namespace AcademyProjectSL.BackgroundServ
 {
     public class MyBackgroundService : IHostedService
     {
         private readonly ILogger<MyBackgroundService> _logger;
-        private ConsumerConfig _consumerConfig;
         private readonly IOptionsMonitor<KafkaSubscriberSettings> _subSettings;
+        private ConsumerConfig _consumerConfig;
         private IConsumer<int, Person> _consumer;
 
         public MyBackgroundService(ILogger<MyBackgroundService> logger, IOptionsMonitor<KafkaSubscriberSettings> subSettings)
