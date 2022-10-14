@@ -15,6 +15,8 @@ using AcademyProjectModels.Users;
 using AcademyProjectDL.Repositories.MsSQL;
 using AcademyProjectSL.BackgroundServ;
 using AcademyProjectModels.CongigurationSettings;
+using AcademyProjectCaches;
+using AcademyProjectModels;
 
 var logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -101,7 +103,8 @@ builder.Services.AddIdentity<UserInfo, UserRole>()
     .AddUserStore<UserInfoStore>()
     .AddRoleStore<UserRoleStore>();
 
-builder.Services.AddHostedService<MyBackgroundService>();
+//builder.Services.AddHostedService<MyBackgroundService>();
+builder.Services.AddHostedService<KafkaGenericConsumer<int, Book>>();
 
 //app builder below
 var app = builder.Build();

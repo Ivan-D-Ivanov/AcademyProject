@@ -17,7 +17,7 @@ namespace AcademyProjectSL.Services
             _producerConfig = new ProducerConfig() { BootstrapServers = _optionsMonitor.CurrentValue.BootstrapServers };
         }
 
-        public async Task PublishTopic(TKey key,TValue person)
+        public async Task PublishTopic(TKey key,TValue item)
         {
             var producer = new ProducerBuilder<TKey, TValue>(_producerConfig)
                 .SetKeySerializer(new MessagePackSerializer<TKey>())
@@ -29,7 +29,7 @@ namespace AcademyProjectSL.Services
                 var msg = new Message<TKey, TValue>()
                 {
                     Key = key,
-                    Value = person
+                    Value = item
                 };
 
                 var result = await producer.ProduceAsync("ProducerPersonTopic", msg);
