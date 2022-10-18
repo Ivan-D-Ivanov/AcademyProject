@@ -1,5 +1,7 @@
 ﻿using AcademyProjectCaches.CacheInMemoryCollection;
+using AcademyProjectDL.DLInterfaces;
 using AcademyProjectDL.Repositories.InMemoryRepo;
+using AcademyProjectDL.Repositories.Mongo;
 using AcademyProjectDL.Repositories.MsSQL;
 using AcademyProjectModels;
 using AcademyProjectSL.Interfaces;
@@ -17,6 +19,8 @@ namespace AcademyProject.Extensions
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
             services.AddSingleton<GenericCollection<Book>>();
+            services.AddSingleton<IPurcahaseRepository, PurchaseRepository>();
+            services.AddSingleton<IShoppingCartRepository, ShoppingCartRepository>();
             return services;
         }
 
@@ -27,6 +31,8 @@ namespace AcademyProject.Extensions
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddSingleton<IKafkaPublisherService<int, Book>, KafkaPublisherService<int, Book>>();
+            services.AddSingleton<IPurchaseService, PurchaseService>();
+            services.AddSingleton<IShoppingCartService, ShoppingCartService>();
             return services;
         }
     }
