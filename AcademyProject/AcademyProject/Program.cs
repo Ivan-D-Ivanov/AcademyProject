@@ -1,22 +1,20 @@
+using System.Text;
+using AcademyProject.CommandHandlers;
 using AcademyProject.Extensions;
 using AcademyProject.HealthChecks;
+using AcademyProject.Middleware;
+using AcademyProjectDL.Repositories.Mongo;
+using AcademyProjectDL.Repositories.MsSQL;
+using AcademyProjectModels.CongigurationSettings;
+using AcademyProjectModels.Users;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Serilog.Sinks.SystemConsole.Themes;
-using Serilog;
 using MediatR;
-using AcademyProject.CommandHandlers;
-using AcademyProject.Middleware;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using AcademyProjectModels.Users;
-using AcademyProjectDL.Repositories.MsSQL;
-using AcademyProjectSL.BackgroundServ;
-using AcademyProjectModels.CongigurationSettings;
-using AcademyProjectCaches;
-using AcademyProjectModels;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 var logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -32,6 +30,8 @@ builder.Services.Configure<KafkaPublisherSettings>(
     builder.Configuration.GetSection(nameof(KafkaPublisherSettings)));
 builder.Services.Configure<KafkaSubscriberSettings>(
     builder.Configuration.GetSection(nameof(KafkaSubscriberSettings)));
+builder.Services.Configure<MongoDbConfiguration>(
+    builder.Configuration.GetSection(nameof(MongoDbConfiguration)));
 
 // Add services to the container.
 builder.Services.RegisterRepositoriesPerson()
@@ -104,7 +104,7 @@ builder.Services.AddIdentity<UserInfo, UserRole>()
     .AddRoleStore<UserRoleStore>();
 
 //builder.Services.AddHostedService<MyBackgroundService>();
-builder.Services.AddHostedService<KafkaGenericConsumer<int, Book>>();
+//builder.Services.AddHostedService<KafkaGenericConsumer<int, Book>>();
 
 //app builder below
 var app = builder.Build();
