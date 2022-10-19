@@ -22,15 +22,16 @@ namespace AcademyProjectSL.Services
             {
                 result.Books.ToList().Add(book);
             }
-
-            var shCart = new ShoppingCart()
+            else
             {
-                Id = Guid.NewGuid(),
-                Books = new List<Book>() { book },
-                UserId = userId
-            };
-
-            await _shoppingCartRepository.AddBookToCart(shCart);
+                var shCart = new ShoppingCart()
+                {
+                    Id = Guid.NewGuid(),
+                    Books = new List<Book>() { book },
+                    UserId = userId
+                };
+                await _shoppingCartRepository.AddBookToCart(shCart);
+            }
         }
 
         public Task EmptyCart(int id)
