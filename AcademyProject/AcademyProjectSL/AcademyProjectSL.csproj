@@ -16,4 +16,8 @@
     <ProjectReference Include="..\AcademyProjectDL\AcademyProjectDL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BackgroundServ\BackGroundInterfaces\" />
+  </ItemGroup>
+
 </Project>

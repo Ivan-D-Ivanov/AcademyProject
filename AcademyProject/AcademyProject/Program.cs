@@ -5,8 +5,11 @@ using AcademyProject.HealthChecks;
 using AcademyProject.Middleware;
 using AcademyProjectDL.Repositories.Mongo;
 using AcademyProjectDL.Repositories.MsSQL;
+using AcademyProjectModels.ConfigurationSettings;
 using AcademyProjectModels.CongigurationSettings;
 using AcademyProjectModels.Users;
+using AcademyProjectSL.Services;
+using Confluent.Kafka;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -32,6 +35,10 @@ builder.Services.Configure<KafkaSubscriberSettings>(
     builder.Configuration.GetSection(nameof(KafkaSubscriberSettings)));
 builder.Services.Configure<MongoDbConfiguration>(
     builder.Configuration.GetSection(nameof(MongoDbConfiguration)));
+builder.Services.Configure<GenericConsumerSettings>(
+    builder.Configuration.GetSection(nameof(GenericConsumerSettings)));
+builder.Services.Configure<DeliveryConsumerSettings>(
+    builder.Configuration.GetSection(nameof(DeliveryConsumerSettings)));
 
 // Add services to the container.
 builder.Services.RegisterRepositoriesPerson()
@@ -105,6 +112,8 @@ builder.Services.AddIdentity<UserInfo, UserRole>()
 
 //builder.Services.AddHostedService<MyBackgroundService>();
 //builder.Services.AddHostedService<KafkaGenericConsumer<int, Book>>();
+builder.Services.AddHostedService<PurchaseDataflowService>();
+builder.Services.AddHostedService<DeliveryDataFlowService>();
 
 //app builder below
 var app = builder.Build();
