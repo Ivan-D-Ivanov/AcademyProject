@@ -32,16 +32,23 @@ namespace AcademyProjectSL.Services
             });
             var actionBlock = new ActionBlock<Delivery>(async b =>
             {
-                var book = _bookRepo.GetById(b.Book.Id);
-                if (book == null)
+                var tasks = new List<Task<Book>>();
+
+                tasks.Add(Task.Run(async () =>
                 {
-                    await _bookRepo.AddBook(book.Result);
-                }
-                else
-                {
-                    book.Result.Quantity += b.Quantity;
-                    await _bookRepo.UpdateBook(book.Result);
-                }
+                    var book = _bookRepo.GetById(b.Book.Id);
+                    if (book == null)
+                    {
+                        return await _bookRepo.AddBook(book.Result);
+                    }
+                    else
+                    {
+                        book.Result.Quantity += b.Quantity;
+                        return await _bookRepo.UpdateBook(book.Result);
+                    }
+                }));
+
+                await Task.WhenAll(tasks);
             });
 
             bufferBlock.LinkTo(transformBlock);
@@ -60,7 +67,7 @@ namespace AcademyProjectSL.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

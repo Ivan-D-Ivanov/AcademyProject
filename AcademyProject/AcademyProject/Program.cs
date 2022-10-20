@@ -9,7 +9,6 @@ using AcademyProjectModels.ConfigurationSettings;
 using AcademyProjectModels.CongigurationSettings;
 using AcademyProjectModels.Users;
 using AcademyProjectSL.Services;
-using Confluent.Kafka;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;

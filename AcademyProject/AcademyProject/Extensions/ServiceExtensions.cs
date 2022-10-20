@@ -5,6 +5,7 @@ using AcademyProjectDL.Repositories.Mongo;
 using AcademyProjectDL.Repositories.MsSQL;
 using AcademyProjectModels;
 using AcademyProjectSL.Interfaces;
+using AcademyProjectSL.ServiceProviders;
 using AcademyProjectSL.Services;
 
 namespace AcademyProject.Extensions
@@ -33,6 +34,7 @@ namespace AcademyProject.Extensions
             services.AddSingleton<IKafkaPublisherService<int, Book>, KafkaPublisherService<int, Book>>();
             services.AddSingleton<IPurchaseService, PurchaseService>();
             services.AddSingleton<IShoppingCartService, ShoppingCartService>();
+            services.AddSingleton<PurchaseServiceProvider>();
             return services;
         }
     }
